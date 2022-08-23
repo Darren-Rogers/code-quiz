@@ -13,6 +13,7 @@
   </style>
 </head>
 <body>
+  <h1 class="time" style="text-align: center;"></h1>
   <section id="start">
     <h2>Start Quiz</h2>
     <button id="startButton">Begin</button>
@@ -25,8 +26,14 @@
   </section>
   <section id="end">
     <h2>Enter Initials</h2>
-    <input type="text" />
+    <input type="text" id='enterInput'/>
     <button id="endButton">Submit</button>
+  </section>
+  <section id="high">
+    <h2>High Scores</h2>
+    <ul id="highScore">
+    </ul>
+    <button>Reset</button>
   </section>
   <script src="./assets/script.js"></script>
 </body>
