@@ -29,6 +29,7 @@ var questions = [
 ]
 var questionOrder = 0
 state = 'start';
+// state changes the view to the start, quiz questions or the end
 function currentSection() {
     if (state === 'start') {
         startElement.style.display = 'block';
@@ -47,20 +48,24 @@ function currentSection() {
         endElement.style.display = 'block';
 
     }
-}
+};
 currentSection()
+// makes the state continue to end if the are no more questions
+// calls checkAnswer to alert if you are right or wrong before moving to next question
 function nextQues(event){
+    checkAnswer(event.target.textContent)
     questionOrder++
     questionsElement.innerHTML = null
     if(questionOrder < questions.length){
-
         displayQuestion()
+        
     }
     else{
         state = 'end'
         currentSection()
     }
-}
+};
+//appends text and choices objects to the quiz state
 function displayQuestion(){
     state='quiz'
     var questionH2 = document.createElement('h2');
@@ -72,16 +77,16 @@ function displayQuestion(){
         buttonElement.addEventListener('click', nextQues)
         questionsElement.append(buttonElement)
     }
-}
+};
 startButton.addEventListener('click',function(){
     state='quiz'
     currentSection();
-    
 }
 );
 submitButton.addEventListener('click',function(){
     
 });
+//checks if the answer is correct and alerts a corresponding alert i.e correct or wrong
 function checkAnswer(answer){
     if(answer == questions[questionOrder].correct){
         alert('Correct!')
@@ -89,4 +94,4 @@ function checkAnswer(answer){
     else{
         alert('Wrong!')
     }
-}
+};
