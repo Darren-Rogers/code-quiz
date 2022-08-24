@@ -3,9 +3,10 @@ var quizElement = document.querySelector('#quiz')
 var endElement = document.querySelector('#end')
 var scoreElement = document.querySelector('#high')
 var titleElement = document.querySelector('#title')
+var beater = document.querySelector('#beatertag')
 var questionsElement = document.querySelector('#questions')
 var startButton = document.querySelector("#startButton")
-var submitButton = document.querySelector("#endButton")
+var submitButton = document.getElementById("endButton")
 var enterInitials =document.querySelector('#enterInput')
 var timer;
 var timerElement = document.querySelector('.time')
@@ -33,7 +34,7 @@ var questions = [
     }
 ]
 var questionOrder = 0
-state = 'end';
+state = 'start';
 // state changes the view to the start, quiz questions or the end
 function currentSection() {
     if (state === 'start') {
@@ -46,8 +47,8 @@ function currentSection() {
         startElement.style.display = 'none';
         quizElement.style.display = 'block';
         endElement.style.display = 'none';
-        displayQuestion()
         scoreElement.style.display ='none';
+        displayQuestion()
     }
     if (state === 'end') {
         startElement.style.display = 'none';
@@ -122,12 +123,12 @@ function setTime(){
 function sendMessage(){
     timerElement.textContent = 'Time has run out'  
 };
-function highScore(){
-    var printInitials = localStorage.getItem(initials)
-    var printScore = localStorage.getItem(timeLeft)
-    localStorage.getItem(printScore)
+function highScore(event){
+    //event.preventDefault();
+    //var printInitials = localStorage.getItem(initials)
+    //var printScore = localStorage.getItem(timeLeft)
+   // //localStorage.getItem(printScore)
     
-
 };
 startButton.addEventListener('click',function(){
     state='quiz'
@@ -135,13 +136,22 @@ startButton.addEventListener('click',function(){
     setTime()
 }
 );
-submitButton.addEventListener('click',function(){
+submitButton.addEventListener('click', function(){
+    //event.preventDefault()
     state = 'high'
-    initials = enterInitials.value
-    localStorage.setItem('Initials',initials)
-    timeLeft = JSON.stringify(seconds)
-    localStorage.setItem('time',timeLeft)
     currentSection()
-    console.log(initials)
-    console.log(timeLeft)
-});
+    var storedHigh = JSON.parse(localStorage.getItem('highScore')) || []
+    var updatedHigh = storedHigh.concat({
+        time: seconds.toString(), 
+        intitial: enterInitials.value
+    },)
+    localStorage.setItem('highScore',JSON.stringify(updatedHigh))
+
+    console.log(updatedHigh)
+    for(var i =0; i < updatedHigh.length; i++){
+        var indexScore = updatedHigh[i]
+        var indexEl = document.createElement('p')
+        indexEl.textContent = indexScore.intitial + ': ' +indexScore.time
+        beater.append(indexEl)
+    }
+})
