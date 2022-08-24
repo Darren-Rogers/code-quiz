@@ -123,13 +123,6 @@ function setTime(){
 function sendMessage(){
     timerElement.textContent = 'Time has run out'  
 };
-function highScore(event){
-    //event.preventDefault();
-    //var printInitials = localStorage.getItem(initials)
-    //var printScore = localStorage.getItem(timeLeft)
-   // //localStorage.getItem(printScore)
-    
-};
 startButton.addEventListener('click',function(){
     state='quiz'
     currentSection();
